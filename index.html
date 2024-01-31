@@ -169,10 +169,11 @@
   // 执行搜索  
   document.getElementById('searchQuery').addEventListener('keyup', function(e) {  
     if (e.key === 'Enter') {  
-      const query = this.value;  
-      const searchEngine = localStorage.getItem('searchEngine') || defaultEngine;  
-      const searchUrl = searchEngine + encodeURIComponent(query);  
-      window.location.href = searchUrl;  
+    e.preventDefault(); // 阻止表单的默认提交行为  
+    const query = document.getElementById('searchQuery').value;  
+    const searchEngine = localStorage.getItem('searchEngine') || defaultEngine;  
+    const searchUrl = searchEngine + encodeURIComponent(query);  
+    window.location.href = searchUrl;  
     }  
   });  
   
