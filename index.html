@@ -1,0 +1,196 @@
+<!DOCTYPE html>  
+<html lang="zh-CN">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>arink起始页</title>
+<meta property="og:image" content="https://nhjiehuo.eu.org/img/avatar.png">  
+<style>
+  body {  
+    margin: 0;  
+    padding: 20px;  
+    font-family: Arial, sans-serif;  
+    background-image: url('background.jpg'); /* 自定义背景图片 */  
+    background-size: cover;  
+  }    
+  body {  
+    margin: 0;  
+    padding: 0;  
+    font-family: 'Arial', sans-serif;  
+    background-color: #f2f2f2;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    height: 100vh;  
+    overflow: hidden;  
+  }  
+  
+  .container {  
+    max-width: 800px;  
+    width: 100%;  
+    background-color: #fff;  
+    border-radius: 8px;  
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  
+    overflow: hidden;  
+    display: flex;  
+    flex-direction: column;  
+  }  
+  
+  .header {  
+    padding: 20px;  
+    background-color: #3498db;  
+    color: #fff;  
+  }  
+  
+  .header h1 {  
+    margin: 0;  
+    font-size: 20px;  
+    font-weight: normal;  
+    text-align: center;  
+  }  
+  
+  .search-section {  
+    padding: 20px;  
+  }  
+  
+  .search-input {  
+    width: 100%;  
+    padding: 10px;  
+    border: 1px solid #ddd;  
+    border-radius: 4px;  
+    font-size: 16px;  
+    outline: none;  
+  }  
+  
+  .search-engines {  
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;  
+    margin-top: 10px;  
+  }  
+  
+  .search-engine-button {  
+    background-color: transparent;  
+    border: none;  
+    color: #888;  
+    font-size: 14px;  
+    cursor: pointer;  
+    outline: none;  
+  }  
+  
+  .search-engine-button.active {  
+    color: #3498db;  
+    font-weight: bold;  
+  }  
+  
+  .time {  
+    text-align: right;  
+    padding: 10px 20px;  
+    font-size: 14px;  
+    color: #888;  
+  }  
+  
+  .footer {  
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;  
+    padding: 10px 20px;  
+    background-color: #f7f7f7;  
+    border-top: 1px solid #eee;  
+  }  
+  
+  .quick-links {  
+    display: flex;  
+    align-items: center;  
+  }  
+  
+  .quick-link {  
+    margin-right: 10px;  
+    color: #3498db;  
+    text-decoration: none;  
+    font-size: 14px;  
+  }  
+  
+  .quick-link:last-child {  
+    margin-right: 0;  
+  }  
+</style>  
+</head>  
+<body>  
+<div class="container">  
+  <div class="header">  
+    <h1>arink起始页</h1>  
+  </div>  
+  
+  <div class="search-section">  
+    <input class="search-input" type="text" id="searchQuery" placeholder="输入搜索关键词">  
+    <div class="search-engines">  
+      <button class="search-engine-button" onclick="setSearchEngine('https://www.google.com/search?q=')">谷歌</button>  
+      <button class="search-engine-button" onclick="setSearchEngine('https://www.bing.com/search?q=')">必应</button>  
+      <button class="search-engine-button" onclick="setSearchEngine('https://www.baidu.com/s?wd=')">百度</button>  
+    </div>  
+  </div>
+  <p><font color="red">按下回车开始搜索</font><</p>   
+  
+  <div class="time" id="timeDisplay"></div>  
+  
+  <div class="footer">  
+    <div class="quick-links">  
+      <a class="quick-link" href="https://nhjiehuo.eu.org/">作者网站</a>  
+      <a class="quick-link" href="https://www.example.com/link2">链接2</a>  
+      <a class="quick-link" href="https://www.example.com/link3">链接3</a>  
+    </div>  
+  </div>  
+</div>  
+  
+<script>  
+  // 搜索引擎设置和存储  
+  function setSearchEngine(engineUrl) {  
+    localStorage.setItem('searchEngine', engineUrl);  
+    document.querySelector('.search-engine-button.active').classList.remove('active');  
+    event.target.classList.add('active');  
+  }  
+  
+  // 初始化搜索引擎选择  
+  const searchEngineButtons = document.querySelectorAll('.search-engine-button');  
+  const storedEngine = localStorage.getItem('searchEngine');  
+  let defaultEngine = 'https://www.google.com/search?q=';  
+  
+  if (storedEngine) {  
+    defaultEngine = storedEngine;  
+  }  
+  
+  searchEngineButtons.forEach(button => {  
+    if (button.getAttribute('onclick').includes(defaultEngine)) {  
+      button.classList.add('active');  
+    }  
+  });  
+  
+  // 执行搜索  
+  document.getElementById('searchQuery').addEventListener('keyup', function(e) {  
+    if (e.key === 'Enter') {  
+      const query = this.value;  
+      const searchEngine = localStorage.getItem('searchEngine') || defaultEngine;  
+      const searchUrl = searchEngine + encodeURIComponent(query);  
+      window.location.href = searchUrl;  
+    }  
+  });  
+  
+  // 显示时间  
+  function updateTime() {  
+    const now = new Date();  
+    const hours = String(now.getHours()).padStart(2, '0');  
+    const minutes = String(now.getMinutes()).padStart(2, '0');  
+    const seconds = String(now.getSeconds()).padStart(2, '0');  
+    const timeString = `${hours}:${minutes}:${seconds}`;  
+    document.getElementById('timeDisplay').textContent = timeString;  
+  }  
+  
+  // 定时更新时间  
+  setInterval(updateTime, 1000);  
+  
+  // 初始化时间显示  
+  updateTime();  
+</script>  
+</body>  
+</html>
