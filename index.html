@@ -130,7 +130,17 @@
       <button class="search-engine-button" onclick="setSearchEngine('https://www.baidu.com/s?wd=')">百度</button>  
     </div>  
   </div>
-  <p><font color="red">按下回车开始搜索</font><</p>   
+  <p><font color="red">按下回车开始搜索</font><</p>
+    <form id="searchForm" action="#">  
+    <div class="search-section">  
+      <input class="search-input" type="text" id="searchQuery" placeholder="输入搜索关键词">  
+      <div class="search-engines">  
+        <button class="search-engine-button" onclick="setSearchEngine('https://www.google.com/search?q=')">Google</button>  
+        <button class="search-engine-button" onclick="setSearchEngine('https://www.bing.com/search?q=')">Bing</button>  
+        <button class="search-engine-button" onclick="setSearchEngine('https://www.baidu.com/s?wd=')">Baidu</button>  
+      </div>  
+    </div>  
+  </form>  
   
   <div class="time" id="timeDisplay"></div>  
   
